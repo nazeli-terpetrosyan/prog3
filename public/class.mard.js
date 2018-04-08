@@ -1,38 +1,11 @@
-class Mard{
-    constructor(x,y){
-        this.x = x;
-        this.y = y;
+class Mard extends LivingCreature {
+    constructor(x, y) {
+        super(x, y);
         this.energy = 0;
-    }
-    stanalNorKordinatner() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
     }
     choose(tiv) {
         this.stanalNorKordinatner();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == tiv) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        if (found.length == 0)
-            return false;
-
-
-        return found;
+        return super.choose(tiv);
     }
     bazmanal() {
         if (this.energy >= 10) {
@@ -50,6 +23,7 @@ class Mard{
                 if (mard[i].x == this.x && mard[i].y == this.y) {
                     matrix[mard[i].y][mard[i].x] = 0;
                     mard.splice(i, 1);
+                    break;
                 }
             }
         }
@@ -80,12 +54,13 @@ class Mard{
             for (var i in xotaker) {
                 if (xotaker[i].x == this.x && xotaker[i].y == this.y) {
                     xotaker.splice(i, 1);
+                    break;
                 }
             }
             this.bazmanal();
             this.energy++;
         }
-        else if(gish){
+        else if (gish) {
             matrix[gish[1]][gish[0]] = 5;
             matrix[this.y][this.x] = 0;
             this.x = gish[0];
@@ -93,12 +68,13 @@ class Mard{
             for (var i in gishatich) {
                 if (gishatich[i].x == this.x && gishatich[i].y == this.y) {
                     gishatich.splice(i, 1);
+                    break;
                 }
             }
             this.bazmanal();
             this.energy++;
         }
-        else if(xot){
+        else if (xot) {
             matrix[xot[1]][xot[0]] = 5;
             matrix[this.y][this.x] = 0;
             this.x = xot[0];
@@ -106,6 +82,7 @@ class Mard{
             for (var i in grassArr) {
                 if (grassArr[i].x == this.x && grassArr[i].y == this.y) {
                     grassArr.splice(i, 1);
+                    break;
                 }
             }
             this.bazmanal();
@@ -114,5 +91,5 @@ class Mard{
         else {
             this.move();
         }
-    }   
+    }
 }

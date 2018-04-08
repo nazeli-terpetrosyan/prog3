@@ -1,2 +1,1 @@
-# prog3 new
-
+Game of life

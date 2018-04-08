@@ -1,7 +1,6 @@
-class Grass {
+class Grass extends LivingCreature {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.multiply = Math.round(Math.random() * 5);
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -14,21 +13,8 @@ class Grass {
             [this.x + 1, this.y + 1]
         ];
     }
-    choose() {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == 0) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
-    }
     bazmanal() {
-        var norVandak = random(this.choose());
+        var norVandak = random(this.choose(0));
         if (this.multiply >= 5 && norVandak) {
             var norXot = new Grass(norVandak[0], norVandak[1]);
             grassArr.push(norXot);

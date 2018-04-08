@@ -1,10 +1,9 @@
-class Hole {
+class Hole extends LivingCreature {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.change = 0;
     }
-    direction() {
+    stanalNorKordinatner() {
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -21,7 +20,7 @@ class Hole {
         ];
     }
     choose() {
-        this.direction();
+        this.stanalNorKordinatner();
         var found = [];
         for (var i in this.directions) {
             var x = this.directions[i][0];
@@ -44,6 +43,7 @@ class Hole {
         for (var i in hole) {
             if (hole[i].x == this.x && hole[i].y == this.y) {
                 hole.splice(i, 1);
+                break;
             }
         }
         while (matrix[a][b] == 2 && matrix[a][b] == 3) {
@@ -72,6 +72,7 @@ class Hole {
                         if (xotaker[k].x == food[i][0] && xotaker[k].y == food[i][1]) {
                             xotaker.splice(k, 1);
                             matrix[food[i][1]][food[i][0]] = 0;
+                            break;
                         }
                     }
                 }
@@ -80,6 +81,7 @@ class Hole {
                         if (gishatich[k].x == food[i][0] && gishatich[k].y == food[i][1]) {
                             gishatich.splice(k, 1);
                             matrix[food[i][1]][food[i][0]] = 0;
+                            break;
                         }
                     }
                 }
@@ -88,6 +90,7 @@ class Hole {
                         if (mard[k].x == food[i][0] && mard[k].y == food[i][1]) {
                             mard.splice(k, 1);
                             matrix[food[i][1]][food[i][0]] = 0;
+                            break;
                         }
                     }
                 }

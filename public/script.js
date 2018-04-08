@@ -5,8 +5,8 @@ var xotaker_qanak = 30;
 var gishatich_qanak = 40;
 var hole_qanak = 7;
 var mard_qanak = 20;
-var k = n-1;
-var j = m-1;
+var k = n - 1;
+var j = m - 1;
 for (var i = 0; i < m; i++) {
     var arr = [];
     for (var a = 0; a < n; a++) {
@@ -33,7 +33,7 @@ for (var i = 0; i < gishatich_qanak; i++) {
     }
     matrix[a][b] = 3;
 }
-for(var i = 0;i<mard_qanak; i++){
+for (var i = 0; i < mard_qanak; i++) {
     var a = Math.floor(Math.random() * n);
     var b = Math.floor(Math.random() * m);
     while (matrix[a][b] != 0 && matrix[a][b] != 1) {
@@ -132,15 +132,15 @@ function draw() {
     for (var i in gishatich) {
         gishatich[i].utel();
     }
-       for (var i in hole) {
+    for (var i in hole) {
         if (hole[i].change == 15) {
             hole[i].move();
         }
-            hole[i].eat();
-        }
-        for(var i in mard){
-            mard[i].utel();
-        }
+        hole[i].eat();
+    }
+    for (var i in mard) {
+        mard[i].utel();
+    }
 }
 
 
