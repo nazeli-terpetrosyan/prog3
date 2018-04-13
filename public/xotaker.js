@@ -1,4 +1,4 @@
-class Xotaker extends LivingCreature {
+module.exports = class Xotaker extends LivingCreature {
     constructor(x, y) {
         super(x, y);
         this.energy = 2;
@@ -63,4 +63,4 @@ class Xotaker extends LivingCreature {
             this.move();
         }
     }
-}
+};
