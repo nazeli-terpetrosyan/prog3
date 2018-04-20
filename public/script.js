@@ -1,3 +1,43 @@
+function main(){
+var time = 0:
+var socket = io.connect('http://localhost:3000');
+var matrix = [];
+var grassArr = [];
+var xotaker = [];
+var gishatich = [];
+var hole = [];
+var mard = [];
+
+function getMatrix(m){
+    matrix = m;
+}
+
+function getGrass(g){
+    grassArr = g;
+}
+
+function getXotaker(g){
+    xotaker = g;
+}
+
+function getGishatich(g){
+    gishatich = g;
+}
+
+function getHole(g){
+    hole = g;
+}
+
+function getMard(g){
+    mard = g;
+}
+socket.on("matrix", getMatrix);
+socket.on("grass", getGrass);
+socket.on("xotaker", getXotaker);
+socket.on("gishatich", getGishatich);
+socket.on("hole", getHole);
+socket.on("mard", getMard);
+
 var side = 10;
 function setup() {
     frameRate(5);
@@ -6,7 +46,10 @@ function setup() {
 }
 
 function draw() {
-
+    time++;
+    if(time%60 == 0){
+        socket.emit('statistics');
+    }
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
@@ -56,5 +99,9 @@ function draw() {
         mard[i].utel();
     }
 }
+}
 
-
+function preload() {
+    main;
+ }
+ 

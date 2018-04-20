@@ -1,10 +1,11 @@
 var express = require("express");
 var app = express();
-var Grass = require("public/grass");
-var Xotaker = require("public/xotaker");
-var Gishatich = require("public/gishatich");
-var Hole = require("public/hole");
-var Mard = require("public/mard");
+var LivingCreature = require("./livingcreature");
+var Grass = require("./grass");
+var Xotaker = require("./xotaker");
+var Gishatich = require("./gishatich");
+var Hole = require("./hole");
+var Mard = require("./mard");
 var grassArr = [];
 var xotaker = [];
 var gishatich = [];
@@ -93,12 +94,6 @@ var statistics = {
     "hole_qanak": hole.length   
 };
 
-function statistic(){
-    var file = statistics.json;
-    var text = JSON.stringify(statistics) + "/n";
-    fs.appendFileSync(file, text);
-}
-
 app.use(express.static("public"));
 
 app.get("/", function (req, res) {
@@ -106,7 +101,18 @@ app.get("/", function (req, res) {
 });
 
 io.on('connection', function (socket) {
+    io.sockets.emit("matrix", matrix);
+    io.sockets.emit("grass", grassArr);
+    io.sockets.emit("xotaker", xotaker);
+    io.sockets.emit("gishatich", gishatich);
+    io.sockets.emit("hole", hole);
+    io.sockets.emit("mard", mard);
 
+    socket.on('statistics', function(){
+        var file = statistics.json;
+        var text = JSON.stringify(statistics) + "/n";
+        fs.appendFileSync(file, text);
+    });
 });
 
 app.listen(3000, function () {
