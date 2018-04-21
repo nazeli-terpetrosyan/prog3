@@ -85,6 +85,8 @@ for (var i = 0; i < hole_qanak; i++) {
 }
 
 var fs = require('fs');
+var cxt_autumn = 50;
+var cxt_summer = 25;
 
 var statistics = {
     "grass_qanak": grassArr.length,
@@ -112,6 +114,30 @@ io.on('connection', function (socket) {
         var file = statistics.json;
         var text = JSON.stringify(statistics) + "/n";
         fs.appendFileSync(file, text);
+    });
+    socket.on('autumn', function(){
+        var t = Math.round(grassArr.length * cxt_autumn/100);
+        for(var i = 0; i<=t; i++){
+            var a = Math.floor(Math.random() * n);
+            var b = Math.floor(Math.random() * m);
+            while (matrix[a][b] != 1) {
+                var a = Math.floor(Math.random() * n);
+                var b = Math.floor(Math.random() * m);
+            }
+            matrix[a][b] = 6;
+        }
+    });
+    socket.on('summer', function(){
+        var t = Math.round(grassArr.length * cxt_summer/100);
+        for(var i = 0; i<=t; i++){
+            var a = Math.floor(Math.random() * n);
+            var b = Math.floor(Math.random() * m);
+            while (matrix[a][b] != 1) {
+                var a = Math.floor(Math.random() * n);
+                var b = Math.floor(Math.random() * m);
+            }
+            matrix[a][b] = 6;
+        }
     });
 });
 
