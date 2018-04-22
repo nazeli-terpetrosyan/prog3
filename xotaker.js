@@ -1,3 +1,5 @@
+var LivingCreature = require("./livingcreature");
+
 module.exports = class Xotaker extends LivingCreature {
     constructor(x, y) {
         super(x, y);
@@ -9,12 +11,14 @@ module.exports = class Xotaker extends LivingCreature {
         return super.choose(tiv);
     }
     bazmanal() {
-        if (this.energy >= 5) {
-            var norVandak = random(this.choose(0));
-            if (norVandak) {
-                xotaker.push(new Xotaker(norVandak[0], norVandak[1]));
-                matrix[norVandak[1]][norVandak[0]] = 2;
-                this.energy = 0;
+        if (time <= 20 || time >= 60 && time <= 80 || time >= 100) {
+            if (this.energy >= 5) {
+                var norVandak = random(this.choose(0));
+                if (norVandak) {
+                    xotaker.push(new Xotaker(norVandak[0], norVandak[1]));
+                    matrix[norVandak[1]][norVandak[0]] = 2;
+                    this.energy = 0;
+                }
             }
         }
     }
