@@ -107,9 +107,6 @@ function draw() {
             if (matrix[y][x] == 7) {
                 bighole.push(new BigHole(x, y));
             }
-            if (matrix[y][x] == 1) {
-                grassArr.push(new Grass(x, y));
-            }
         }
     }
     if (time == 20 ) {
@@ -176,8 +173,8 @@ function draw() {
         }
     }
     function click() {
-        console.log(1);
         if(time>= 40 && time<=60){
+            fill(0,0,0);
             text("Now is snowing", 245, 325);
             var t = Math.round(grassArr.length * rain_snow/100);
         for(var i = 0; i<=t; i++){
@@ -191,6 +188,7 @@ function draw() {
         }
      }
         else{
+            fill(0,0,0);
             text("Now is raining", 245, 325);
             var t = Math.round(grassArr.length * rain_snow/100);
         for(var i = 0; i<=t; i++){
@@ -201,15 +199,14 @@ function draw() {
                 var b = Math.floor(Math.random() * m);
             }
             matrix[a][b] = 1;
+            new Grass(b, a);
         }
         }
         background('#acacac')
     }
     window.onclick = click;
-    addEventListener("onclick", click);
 
     function keyPressed(){
-        console.log(key);
         var a = Math.floor(Math.random() * n);
         var b = Math.floor(Math.random() * m);
         while (matrix[a][b] != 0) {

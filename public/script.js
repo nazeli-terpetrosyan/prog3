@@ -9,17 +9,19 @@ var gishatich = [];
 var hole = [];
 var mard = [];
 
+function setup() {
+    frameRate(5);
+    createCanvas(300, 300);
+    background('#acacac');
+}
+
 function main() {
     function getMatrix(m) {
         matrix = m;
     }
     socket.on("matrix", getMatrix);
 
-    function setup() {
-        frameRate(5);
-        createCanvas(matrix[0].length * side, matrix.length * side);
-        background('#acacac');
-    }
+
 }
 function draw() {
     time++;
@@ -27,31 +29,53 @@ function draw() {
     if (time % 10 == 0) {
         socket.emit('statistics');
     }
-    
+
     if (time == 20) {
-        fill(0,0,0);
-        text("Now is Autumn", 10, 320);
+        fill(0, 0, 0);
+        text("Now is Autumn", 10, 325);
         socket.emit('autumn');
     }
     if (time = 40) {
-        fill(0,0,0);
-        text("Now is Winter", 10, 320);
+        fill(0, 0, 0);
+        text("Now is Winter", 10, 325);
         socket.emit('winter');
     }
     if (time == 60) {
-        fill(0,0,0);
-        text("Now is Spring", 10, 320);
+        fill(0, 0, 0);
+        text("Now is Spring", 10, 325);
         socket.emit('spring');
     }
-    if(time == 80){
-        fill(0,0,0);
-        text("Now is Summer", 10, 320);
+    if (time == 80) {
+        fill(0, 0, 0);
+        text("Now is Summer", 10, 325);
         socket.emit('summer');
     }
-    if(time == 100){
+    if (time == 100) {
+        background('#acacac');
         socket.emit('normal');
     }
+    function click() {
+        if (time >= 40 && time <= 60) {
+            fill(0, 0, 0);
+            text("Now is snowing", 245, 325);
+            socket.emit('snow');
+        }
+        else {
+            fill(0, 0, 0);
+            text("Now is raining", 245, 325);
+            socket.emit('rain');
+        }
+        background('#acacac')
+    }
+    window.onclick = click;
 
+    function keyPressed() {
+        socket.emit('newBigHole');
+    }
+
+    function keyup() {
+        socket.emit('BigHoleDie');
+    }
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
@@ -80,34 +104,16 @@ function draw() {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 6) {
-                if(time >= 40 && time<=60){
+                if (time >= 40 && time <= 60) {
                     fill("white");
                     rect(x * side, y * side, side, side);
                 }
-                else{
+                else {
                     fill("#cca300");
-                    rect(x * side, y * side, side, side);   
+                    rect(x * side, y * side, side, side);
                 }
             }
         }
-    }
-    for (var i in grassArr) {
-        grassArr[i].bazmanal();
-    }
-    for (var i in xotaker) {
-        xotaker[i].utel();
-    }
-    for (var i in gishatich) {
-        gishatich[i].utel();
-    }
-    for (var i in hole) {
-        if (hole[i].change == 15) {
-            hole[i].move();
-        }
-        hole[i].eat();
-    }
-    for (var i in mard) {
-        mard[i].utel();
     }
 }
 window.onload = main;
