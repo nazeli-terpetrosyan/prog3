@@ -6,9 +6,11 @@ var xotaker_qanak = 40;
 var gishatich_qanak = 20;
 var hole_qanak = 5;
 var mard_qanak = 5;
+var joker_qanak = 5;
 var cxt_autumn = 15;
 var cxt_summer = 8;
-var s_grass_t = 40;
+var s_grass_t = 20;
+var rain_snow = 10;
 var k = n-1;
 var j = m-1;
 for (var i = 0; i < m; i++) {
@@ -70,6 +72,8 @@ var xotaker = [];
 var gishatich = [];
 var hole = [];
 var mard = [];
+var bighole = [];
+var joker = [];
 
 function setup() {
     frameRate(5);
@@ -98,9 +102,19 @@ function setup() {
 
 function draw() {
     time++;
+    for (var y = 0; y < matrix.length; y++) {
+        for (var x = 0; x < matrix[y].length; x++) {
+            if (matrix[y][x] == 7) {
+                bighole.push(new BigHole(x, y));
+            }
+            if (matrix[y][x] == 1) {
+                grassArr.push(new Grass(x, y));
+            }
+        }
+    }
     if (time == 20 ) {
         fill(0,0,0);
-        text("Now is Autumn", 10, 320);
+        text("Now is Autumn", 10, 325);
         var t = Math.round(grassArr.length * cxt_autumn/100);
         for(var i = 0; i<=t; i++){
             var a = Math.floor(Math.random() * n);
@@ -114,7 +128,8 @@ function draw() {
     }
     if (time == 40) {
         fill(0,0,0);
-        text("Now is Winter", 10, 320);
+        background('#acacac');
+        text("Now is Winter", 10, 325);
         for (var y = 0; y < matrix.length; y++) {
             for (var x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] == 6) {
@@ -135,7 +150,8 @@ function draw() {
     }
     if (time >= 60 && time <= 80) {
         fill(0,0,0);
-        text("Now is Spring", 10, 320);
+        background('#acacac');
+        text("Now is Spring", 10, 325);
         for (var y = 0; y < matrix.length; y++) {
             for (var x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] == 6) {
@@ -146,7 +162,8 @@ function draw() {
     }
     if(time == 80){
         fill(0,0,0);
-        text("Now is Summer", 10, 320);
+        background('#acacac');
+        text("Now is Summer", 10, 325);
         var t = Math.round(grassArr.length * cxt_summer/100);
         for(var i = 0; i<=t; i++){
             var a = Math.floor(Math.random() * n);
@@ -158,8 +175,56 @@ function draw() {
             matrix[a][b] = 6;
         }
     }
+    function click() {
+        console.log(1);
+        if(time>= 40 && time<=60){
+            text("Now is snowing", 245, 325);
+            var t = Math.round(grassArr.length * rain_snow/100);
+        for(var i = 0; i<=t; i++){
+            var a = Math.floor(Math.random() * n);
+            var b = Math.floor(Math.random() * m);
+            while (matrix[a][b] != 1) {
+                var a = Math.floor(Math.random() * n);
+                var b = Math.floor(Math.random() * m);
+            }
+            matrix[a][b] = 6;
+        }
+     }
+        else{
+            text("Now is raining", 245, 325);
+            var t = Math.round(grassArr.length * rain_snow/100);
+        for(var i = 0; i<=t; i++){
+            var a = Math.floor(Math.random() * n);
+            var b = Math.floor(Math.random() * m);
+            while (matrix[a][b] != 0) {
+                var a = Math.floor(Math.random() * n);
+                var b = Math.floor(Math.random() * m);
+            }
+            matrix[a][b] = 1;
+        }
+        }
+        background('#acacac')
+    }
+    window.onclick = click;
+    addEventListener("onclick", click);
+
+    function keyPressed(){
+        console.log(key);
+        var a = Math.floor(Math.random() * n);
+        var b = Math.floor(Math.random() * m);
+        while (matrix[a][b] != 0) {
+            var a = Math.floor(Math.random() * n);
+            var b = Math.floor(Math.random() * m);
+        }
+        matrix[a][b] = 7;
+    }
+
+    function keyup(){
+        bighole[0].mahanal();
+    }
 
     if(time == 100){
+        background('#acacac');
         for (var y = 0; y < matrix.length; y++) {
             for (var x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] == 6) {
@@ -180,7 +245,7 @@ function draw() {
                 fill("#acacac");
                 rect(x * side, y * side, side, side);
             }
-            else if (matrix[y][x] == 4) {
+            else if (matrix[y][x] == 4 || matrix[y][x] == 7) {
                 fill("black");
                 rect(x * side, y * side, side, side);
             }
@@ -206,6 +271,10 @@ function draw() {
                     rect(x * side, y * side, side, side);   
                 }
             }
+            else if(matrix[y][x] == 8){
+                fill('blue');
+                rect(x * side, y * side, side, side); 
+            }
         }
     }
     for (var i in grassArr) {
@@ -214,9 +283,11 @@ function draw() {
     for (var i in xotaker) {
         xotaker[i].utel();
     }
+    if(time<40 || time>60){
     for (var i in gishatich) {
         gishatich[i].utel();
     }
+}
        for (var i in hole) {
         if (hole[i].change == 15) {
             hole[i].move();
@@ -226,6 +297,9 @@ function draw() {
         for(var i in mard){
             mard[i].utel();
         }
-}
+        if(bighole.length> 0){
+        bighole[0].eat();
+        }
+    
 
-
+    }

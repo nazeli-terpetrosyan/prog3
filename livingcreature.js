@@ -2,6 +2,7 @@ module.exports = class LivingCreature {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.gender = Math.ceil(Math.random * 2);
     }
     choose(tiv) {
         this.stanalNorKordinatner();
