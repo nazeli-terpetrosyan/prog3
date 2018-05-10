@@ -4,6 +4,10 @@ module.exports = class LivingCreature {
         this.y = y;
         this.gender = Math.ceil(Math.random * 2);
     }
+    random(array){
+        var a = Math.round(Math.random() * array.length);
+        return array[a];
+    }
     choose(tiv) {
         this.stanalNorKordinatner();
         var found = [];

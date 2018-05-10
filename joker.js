@@ -1,33 +1,36 @@
 var Xotaker = require("./xotaker");
 var Gishatich = require("./gishatich");
+var LivingCreature = require("./livingcreature");
 
-module.exports = class Joker {
+module.exports = class Joker extends LivingCreature {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
+        super(x, y);
+        this.norkerp = 0;
     }
+    choose(tiv) {
+        this.stanalNorKordinatner();
+        return super.choose(tiv);
+    }
+
     norkerpar() {
-        var kerpar = Math.floor(Math.random() * 2);
-        var kordiatner = random(this.directions);
-        var x = kordinatner[0];
-        var y = kordinatner[1];
-        if (kerpar == 0) {
-            xotaker.push(new Xotaker(x, y));
+        if (this.norkerp == 1) {
+            var kerpar = Math.floor(Math.random() * 2);
+            var kordinatner = this.random(this.choose(0));
+            if (kordinatner) {
+                var x = kordinatner[0];
+                var y = kordinatner[1];
+                if (kerpar == 0) {
+                    xotaker.push(new Xotaker(x, y));
+                }
+                else {
+                    gishatich.push(new Gishatich(x, y));
+                }
+            }
+            this.norkerp = 0;
         }
         else {
-            gishatich.push(new Gishatich(x, y));
+            this.move();
         }
-        this.move();
     }
     move() {
         matrix[this.y][this.x] = 0;
@@ -37,6 +40,9 @@ module.exports = class Joker {
             var a = Math.floor(Math.random() * n);
             var b = Math.floor(Math.random() * m);
         }
-        matrix[a][b] = 8;
+        this.x = b;
+        this.y = a;
+        matrix[a][b] = 7;
+        this.norkerp++;
     }
 };

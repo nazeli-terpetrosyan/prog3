@@ -11,16 +11,14 @@ module.exports = class Xotaker extends LivingCreature {
         return super.choose(tiv);
     }
     bazmanal() {
-        if (time <= 20 || time >= 60 && time <= 80 || time >= 100) {
             if (this.energy >= 5) {
-                var norVandak = random(this.choose(0));
+                var norVandak = this.random(this.choose(0));
                 if (norVandak) {
                     xotaker.push(new Xotaker(norVandak[0], norVandak[1]));
                     matrix[norVandak[1]][norVandak[0]] = 2;
                     this.energy = 0;
                 }
             }
-        }
     }
     mahanal() {
         if (this.energy <= 0) {
@@ -35,7 +33,7 @@ module.exports = class Xotaker extends LivingCreature {
     }
 
     move() {
-        var norVandak = random(this.choose(0));
+        var norVandak = this.random(this.choose(0));
         if (norVandak) {
             matrix[this.y][this.x] = 0;
             matrix[norVandak[1]][norVandak[0]] = 2;
@@ -48,7 +46,7 @@ module.exports = class Xotaker extends LivingCreature {
 
     utel() {
         this.stanalNorKordinatner();
-        var xot = random(this.choose(1));
+        var xot = this.random(this.choose(1));
         if (xot) {
             matrix[xot[1]][xot[0]] = 2;
             matrix[this.y][this.x] = 0;

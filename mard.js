@@ -11,7 +11,7 @@ module.exports = class Mard extends LivingCreature {
     }
     bazmanal() {
         if (this.energy >= 10) {
-            var norVandak = random(this.choose(0));
+            var norVandak = this.random(this.choose(0));
             if (norVandak) {
                 mard.push(new Mard(norVandak[0], norVandak[1]));
                 matrix[norVandak[1]][norVandak[0]] = 5;
@@ -32,7 +32,7 @@ module.exports = class Mard extends LivingCreature {
     }
 
     move() {
-        var norVandak = random(this.choose(0));
+        var norVandak = this.random(this.choose(0));
         if (norVandak) {
             matrix[this.y][this.x] = 0;
             matrix[norVandak[1]][norVandak[0]] = 5;
@@ -45,9 +45,9 @@ module.exports = class Mard extends LivingCreature {
 
     utel() {
         this.stanalNorKordinatner();
-        var xot = random(this.choose(1));
-        var xotak = random(this.choose(2));
-        var gish = random(this.choose(3));
+        var xot = this.random(this.choose(1));
+        var xotak = this.random(this.choose(2));
+        var gish = this.random(this.choose(3));
         if (xotak) {
             matrix[xotak[1]][xotak[0]] = 5;
             matrix[this.y][this.x] = 0;

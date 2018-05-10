@@ -16,7 +16,7 @@ module.exports = class Grass extends LivingCreature {
         ];
     }
     bazmanal() {
-        var norVandak = random(this.choose(0));
+        var norVandak = this.random(this.choose(0));
         if (this.multiply >= 5 && norVandak) {
             var norXot = new Grass(norVandak[0], norVandak[1]);
             grassArr.push(norXot);

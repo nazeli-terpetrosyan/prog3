@@ -11,7 +11,7 @@ module.exports = class Gishatich extends LivingCreature {
     }
     bazmanal() {
         if (this.energy >= 5) {
-            var norVandak = random(this.choose(0));
+            var norVandak = this.random(this.choose(0));
             if (norVandak) {
                 gishatich.push(new Gishatich(norVandak[0], norVandak[1]));
                 matrix[norVandak[1]][norVandak[0]] = 3;
@@ -32,7 +32,7 @@ module.exports = class Gishatich extends LivingCreature {
     }
 
     move() {
-        var norVandak = random(this.choose(1));
+        var norVandak = this.random(this.choose(1));
         if (norVandak) {
             matrix[norVandak[1]][norVandak[0]] = 3;
             matrix[this.y][this.x] = 1;
@@ -45,7 +45,7 @@ module.exports = class Gishatich extends LivingCreature {
 
     utel() {
         this.stanalNorKordinatner();
-        var xot = random(this.choose(2));
+        var xot = this.random(this.choose(2));
         if (xot) {
             matrix[xot[1]][xot[0]] = 3;
             matrix[this.y][this.x] = 1;
