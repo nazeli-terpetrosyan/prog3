@@ -55,7 +55,7 @@ socket.on("matrix", function (m) {
                 fill("#acacac");
                 rect(x * side, y * side, side, side);
             }
-            else if (matrix[y][x] == 4) {
+            else if (matrix[y][x] == 4 || matrix[y][x] == 7) {
                 fill("black");
                 rect(x * side, y * side, side, side);
             }
@@ -81,7 +81,7 @@ socket.on("matrix", function (m) {
                     rect(x * side, y * side, side, side);
                 }
             }
-             else if (matrix[y][x] == 7) {
+             else if (matrix[y][x] == 8) {
                 fill("blue");
                 rect(x * side, y * side, side, side);
             }
@@ -90,7 +90,7 @@ socket.on("matrix", function (m) {
 });
 
 function setup() {
-    frameRate(5);
+    frameRate(1);
     createCanvas(300, 300);
     background('#acacac');
 }
@@ -109,10 +109,10 @@ function setup() {
 //     background('#acacac')
 // }
 
-// function keyPressed() {
-//     socket.emit('newBigHole');
-// }
+function keyPressed() {
+    socket.emit('newBigHole');
+}
 
-// function keyup() {
-//     socket.emit('BigHoleDie');
-// }
+function keyup() {
+    socket.emit('BigHoleDie');
+}

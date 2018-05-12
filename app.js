@@ -38,6 +38,7 @@ global.gishatich = [];
 global.hole = [];
 global.mard = [];
 global.joker = [];
+global.bighole = [];
 
 for (var i = 0; i < m; i++) {
     var arr = [];
@@ -102,7 +103,7 @@ for (var i = 0; i < joker_qanak; i++) {
         var a = Math.floor(Math.random() * n);
         var b = Math.floor(Math.random() * m);
     }
-    matrix[a][b] = 7;
+    matrix[a][b] = 8;
     joker.push(new Joker(b, a));
 }
     for (var y = 0; y < matrix.length; y++) {
@@ -218,6 +219,7 @@ io.on('connection', function (socket) {
         }
     });
     socket.on('newBigHole', function () {
+        if(bighole.length < 1){
         var a = Math.floor(Math.random() * n);
         var b = Math.floor(Math.random() * m);
         while (matrix[a][b] != 0) {
@@ -225,6 +227,7 @@ io.on('connection', function (socket) {
             var b = Math.floor(Math.random() * m);
         }
         matrix[a][b] = 7;
+        }
     });
     socket.on('BigHoleDie', function () {
         bighole[0].mahanal();
@@ -252,6 +255,11 @@ function main() {
     }
     for (var i in joker) {
         joker[i].norkerpar();
+    }
+    if(bighole.length == 1){
+    for(var i in bighole){
+        bighole[i].eat();
+    }
     }
     io.sockets.emit('matrix', matrix);
 }

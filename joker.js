@@ -20,9 +20,11 @@ module.exports = class Joker extends LivingCreature {
                 var x = kordinatner[0];
                 var y = kordinatner[1];
                 if (kerpar == 0) {
+                    matrix[y][x] = 2;
                     xotaker.push(new Xotaker(x, y));
                 }
                 else {
+                    matrix[y][x] = 3;
                     gishatich.push(new Gishatich(x, y));
                 }
             }
@@ -42,7 +44,7 @@ module.exports = class Joker extends LivingCreature {
         }
         this.x = b;
         this.y = a;
-        matrix[a][b] = 7;
+        matrix[a][b] = 8;
         this.norkerp++;
     }
 };
