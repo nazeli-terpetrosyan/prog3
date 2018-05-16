@@ -32,6 +32,7 @@ var Gishatich = require("./gishatich");
 var Hole = require("./hole");
 var Mard = require("./mard");
 var Joker = require("./joker");
+var BigHole = require("./bighole");
 global.grassArr = [];
 global.xotaker = [];
 global.gishatich = [];
@@ -106,17 +107,37 @@ for (var i = 0; i < joker_qanak; i++) {
     matrix[a][b] = 8;
     joker.push(new Joker(b, a));
 }
-    for (var y = 0; y < matrix.length; y++) {
-        for (var x = 0; x < matrix[y].length; x++) {
-            if (matrix[y][x] == 1) {
-                grassArr.push(new Grass(x, y));
-            }
+for (var y = 0; y < matrix.length; y++) {
+    for (var x = 0; x < matrix[y].length; x++) {
+        if (matrix[y][x] == 1) {
+            grassArr.push(new Grass(x, y));
         }
     }
+}
+
+for (var y = 0; y < matrix.length; y++) {
+    for (var x = 0; x < matrix[y].length; x++) {
+        if(matrix[a][b] == 2){
+            var c = Math.round(Math.random * 2)/2;
+        }
+    }
+}
+
+for (var y = 0; y < matrix.length; y++) {
+    for (var x = 0; x < matrix[y].length; x++) {
+
+    }
+}
+
+for (var y = 0; y < matrix.length; y++) {
+    for (var x = 0; x < matrix[y].length; x++) {
+
+    }
+}
 
 var fs = require('fs');
 
-var statistics = {
+var statis = {
     "grass_qanak": grassArr.length,
     "xotaker_qanak": xotaker.length,
     "gishatich_qanak": gishatich.length,
@@ -128,8 +149,8 @@ io.on('connection', function (socket) {
     io.sockets.emit('matrix', matrix);
 
     socket.on('statistics', function () {
-        var file = statistics.json;
-        var text = JSON.stringify(statistics) + "/n";
+        var file = 'statistics.json';
+        var text = JSON.stringify(statis) + "/n";
         fs.appendFileSync(file, text);
     });
     socket.on('autumn', function () {
@@ -215,22 +236,24 @@ io.on('connection', function (socket) {
                 var b = Math.floor(Math.random() * m);
             }
             matrix[a][b] = 1;
-            new Grass(b, a);
+            grassArr.push(new Grass(b, a));
         }
     });
     socket.on('newBigHole', function () {
-        if(bighole.length < 1){
-        var a = Math.floor(Math.random() * n);
-        var b = Math.floor(Math.random() * m);
-        while (matrix[a][b] != 0) {
-            var a = Math.floor(Math.random() * n);
-            var b = Math.floor(Math.random() * m);
-        }
-        matrix[a][b] = 7;
+        if (bighole.length < 1) {
+            var a = Math.floor(Math.random() * 25);
+            var b = Math.floor(Math.random() * 25);
+            while (matrix[a][b] != 0) {
+                var a = Math.floor(Math.random() * 25);
+                var b = Math.floor(Math.random() * 25);
+            }
+            bighole.push(new BigHole(b, a));
         }
     });
     socket.on('BigHoleDie', function () {
-        bighole[0].mahanal();
+        if (bighole.length == 1) {
+            bighole[0].mahanal();
+        }
     });
 });
 function main() {
@@ -248,7 +271,7 @@ function main() {
         if (hole[i].change == 15) {
             hole[i].move();
         }
-        hole[i].eat();8 
+        hole[i].eat(); 
     }
     for (var i in mard) {
         mard[i].utel();
@@ -256,10 +279,10 @@ function main() {
     for (var i in joker) {
         joker[i].norkerpar();
     }
-    if(bighole.length == 1){
-    for(var i in bighole){
-        bighole[i].eat();
-    }
+    if (bighole.length == 1) {
+        for (var i in bighole) {
+            bighole[i].eat();
+        }
     }
     io.sockets.emit('matrix', matrix);
 }

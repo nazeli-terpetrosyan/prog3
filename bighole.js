@@ -1,7 +1,7 @@
 module.exports = class BigHole {
-    constructor() {
-        this.x = 15;
-        this.y = 15;
+    constructor(x,y) {
+        this.x = x;
+        this.y = y;
     }
     stanalNorKordinatner() {
         this.directions = [

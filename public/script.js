@@ -14,35 +14,43 @@ socket.on("matrix", function (m) {
     background('#acacac');
     time++; 
     
-    // if (time % 10 == 0) {
-    //     socket.emit('statistics');
-    // }
+    if (time % 10 == 0) {
+        socket.emit('statistics');
+    }
 
-    // if (time == 20) {
-    //     fill(0, 0, 0);
-    //     text("Now is Autumn", 10, 325);
-    //     socket.emit('autumn');
-    // }
-    // if (time = 40) {
-    //     fill(0, 0, 0);
-    //     text("Now is Winter", 10, 325);
-    //     socket.emit('winter');
-    // }
-    // if (time == 60) {
-    //     fill(0, 0, 0);
-    //     text("Now is Spring", 10, 325);
-    //     socket.emit('spring');
-    // }
-    // if (time == 80) {
-    //     fill(0, 0, 0);
-    //     text("Now is Summer", 10, 325);
-    //     socket.emit('summer');
-    // }
-    // if (time == 100) {
-    //     background('#acacac');
-    //     socket.emit('normal');
-    // }
-
+    if (time == 20) {
+        socket.emit('autumn');
+    }
+    if (time == 40) {
+        socket.emit('winter');
+    }
+    if (time == 60) {
+        socket.emit('spring');
+    }
+    if (time == 80) {
+        socket.emit('summer');
+    }
+    if (time == 100) {
+        background('#acacac');
+        socket.emit('normal');
+    }
+    
+    if (time >= 20 && time <= 40) {
+        fill(0, 0, 0);
+        text("Now is Autumn", 10, 325);
+    }
+    if (time >= 40 && time <= 60) {
+        fill(0, 0, 0);
+        text("Now is Winter", 10, 325);
+    }
+    if (time >= 60 && time <= 80) {
+        fill(0, 0, 0);
+        text("Now is Spring", 10, 325);
+    }
+    if (time >= 80 && time <= 100) {
+        fill(0, 0, 0);
+        text("Now is Summer", 10, 325);
+    }
 
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
@@ -91,28 +99,23 @@ socket.on("matrix", function (m) {
 
 function setup() {
     frameRate(1);
-    createCanvas(300, 300);
+    createCanvas(300, 340);
     background('#acacac');
 }
 
-// function mousePressed() {
-//     if (time >= 40 && time <= 60) {
-//         fill(0, 0, 0);
-//         text("Now is snowing", 245, 325);
-//         socket.emit('snow');
-//     }
-//     else {
-//         fill(0, 0, 0);
-//         text("Now is raining", 245, 325);
-//         socket.emit('rain');
-//     }
-//     background('#acacac')
-// }
+function Rain() {
+    if (time >= 40 && time <= 60) {
+        socket.emit('snow');
+    }
+    else {
+        socket.emit('rain');
+    }
+}
 
-function keyPressed() {
+function CreateBigHole() {
     socket.emit('newBigHole');
 }
 
-function keyup() {
+function DeleteBigHole() {
     socket.emit('BigHoleDie');
 }
