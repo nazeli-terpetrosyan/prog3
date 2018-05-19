@@ -10,7 +10,8 @@ module.exports = class Mard extends LivingCreature {
         return super.choose(tiv);
     }
     bazmanal() {
-        if (this.energy >= 10) {
+        if(this.gender == 1){
+        if (this.energy >= 10 && this.choose(5)) {
             var norVandak = this.random(this.choose(0));
             if (norVandak) {
                 mard.push(new Mard(norVandak[0], norVandak[1]));
@@ -18,6 +19,7 @@ module.exports = class Mard extends LivingCreature {
                 this.energy = 0;
             }
         }
+    }
     }
     mahanal() {
         if (this.energy <= 0) {

@@ -11,7 +11,8 @@ module.exports = class Xotaker extends LivingCreature {
         return super.choose(tiv);
     }
     bazmanal() {
-            if (this.energy >= 5) {
+        if(this.gender == 1){
+            if (this.energy >= 5 && this.choose(2)) {
                 var norVandak = this.random(this.choose(0));
                 if (norVandak) {
                     xotaker.push(new Xotaker(norVandak[0], norVandak[1]));
@@ -19,6 +20,7 @@ module.exports = class Xotaker extends LivingCreature {
                     this.energy = 0;
                 }
             }
+        }
     }
     mahanal() {
         if (this.energy <= 0) {

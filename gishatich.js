@@ -10,7 +10,8 @@ module.exports = class Gishatich extends LivingCreature {
         return super.choose(tiv);
     }
     bazmanal() {
-        if (this.energy >= 5) {
+        if(this.gender == 1){
+        if (this.energy >= 5 && this.choose(3)) {
             var norVandak = this.random(this.choose(0));
             if (norVandak) {
                 gishatich.push(new Gishatich(norVandak[0], norVandak[1]));
@@ -18,6 +19,7 @@ module.exports = class Gishatich extends LivingCreature {
                 this.energy = 0;
             }
         }
+    }
     }
     mahanal() {
         if (this.energy <= 0) {

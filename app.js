@@ -17,14 +17,21 @@ global.m = 30;
 var xotaker_qanak = 40;
 var gishatich_qanak = 20;
 var hole_qanak = 5;
-var mard_qanak = 5;
+var mard_qanak = 20;
 var joker_qanak = 5;
+var xotaker_a_qanak = Math.round(Math.random() * xotaker_qanak);
+var gishatich_a_qanak = Math.round(Math.random() * gishatich_qanak);
+var mard_a_qanak = Math.round(Math.random() * mard_qanak);
 var cxt_autumn = 15;
 var cxt_summer = 8;
 var s_grass_t = 20;
 var rain_snow = 10;
 global.k = n - 1;
 global.j = m - 1;
+
+console.log(xotaker_a_qanak);
+console.log(gishatich_a_qanak);
+console.log(mard_a_qanak);
 
 var Grass = require("./grass");
 var Xotaker = require("./xotaker");
@@ -114,24 +121,51 @@ for (var y = 0; y < matrix.length; y++) {
         }
     }
 }
-
-for (var y = 0; y < matrix.length; y++) {
-    for (var x = 0; x < matrix[y].length; x++) {
-        if(matrix[a][b] == 2){
-            var c = Math.round(Math.random * 2)/2;
+for (var i = 0; i <= xotaker_a_qanak; i++) {
+    var a = Math.floor(Math.random() * n);
+    var b = Math.floor(Math.random() * m);
+    while (matrix[a][b] != 2) {
+        var a = Math.floor(Math.random() * n);
+        var b = Math.floor(Math.random() * m);
+    }
+    matrix[a][b] = 2.5;
+    for (var i in xotaker) {
+        if (xotaker[i].x == b && xotaker[i].y == a) {
+           xotaker[i].gender = 1; 
+            break;
         }
     }
 }
 
-for (var y = 0; y < matrix.length; y++) {
-    for (var x = 0; x < matrix[y].length; x++) {
-
+for (var i = 0; i <= gishatich_a_qanak; i++) {
+    var a = Math.floor(Math.random() * n);
+    var b = Math.floor(Math.random() * m);
+    while (matrix[a][b] != 3) {
+        var a = Math.floor(Math.random() * n);
+        var b = Math.floor(Math.random() * m);
+    }
+    matrix[a][b] = 3.5;
+    for (var i in gishatich) {
+        if (gishatich[i].x == b && gishatich[i].y == a) {
+           gishatich[i].gender = 1; 
+            break;
+        }
     }
 }
 
-for (var y = 0; y < matrix.length; y++) {
-    for (var x = 0; x < matrix[y].length; x++) {
-
+for (var i = 0; i <= mard_a_qanak; i++) {
+    var a = Math.floor(Math.random() * n);
+    var b = Math.floor(Math.random() * m);
+    while (matrix[a][b] != 5) {
+        var a = Math.floor(Math.random() * n);
+        var b = Math.floor(Math.random() * m);
+    }
+    matrix[a][b] = 5.5;
+    for (var i in mard) {
+        if (mard[i].x == b && mard[i].y == a) {
+           mard[i].gender = 1; 
+            break;
+        }
     }
 }
 
@@ -150,10 +184,17 @@ io.on('connection', function (socket) {
 
     socket.on('statistics', function () {
         var file = 'statistics.json';
-        var text = JSON.stringify(statis) + "/n";
+        var text = JSON.stringify(statis) + "\n";
         fs.appendFileSync(file, text);
     });
     socket.on('autumn', function () {
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 6) {
+                    matrix[y][x] = 1;
+                }
+            }
+        }
         var t = Math.round(grassArr.length * cxt_autumn / 100);
         for (var i = 0; i <= t; i++) {
             var a = Math.floor(Math.random() * n);
@@ -194,6 +235,13 @@ io.on('connection', function (socket) {
         }
     });
     socket.on('summer', function () {
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 6) {
+                    matrix[y][x] = 1;
+                }
+            }
+        }
         var t = Math.round(grassArr.length * cxt_summer / 100);
         for (var i = 0; i <= t; i++) {
             var a = Math.floor(Math.random() * n);
@@ -205,15 +253,7 @@ io.on('connection', function (socket) {
             matrix[a][b] = 6;
         }
     });
-    socket.on('normal', function () {
-        for (var y = 0; y < matrix.length; y++) {
-            for (var x = 0; x < matrix[y].length; x++) {
-                if (matrix[y][x] == 6) {
-                    matrix[y][x] = 1;
-                }
-            }
-        }
-    });
+
     socket.on('snow', function () {
         var t = Math.round(grassArr.length * rain_snow / 100);
         for (var i = 0; i <= t; i++) {
@@ -271,7 +311,7 @@ function main() {
         if (hole[i].change == 15) {
             hole[i].move();
         }
-        hole[i].eat(); 
+        hole[i].eat();
     }
     for (var i in mard) {
         mard[i].utel();
