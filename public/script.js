@@ -1,7 +1,10 @@
+import { stat } from "fs";
+
 matrix = [];
 socket = io();
-var time = 0;
+var statistics = 0;
 var side = 10;
+var seasons = 0;
 
 var grassArr = [];
 var xotaker = [];
@@ -12,42 +15,40 @@ var mard = [];
 socket.on("matrix", function (m) {
     matrix = m;
     background('#acacac');
-    time++; 
+    statistics++; 
     
-    if (time % 10 == 0) {
+    if (statistics == 10) {
         socket.emit('statistics');
+        statistics = 0;
     }
 
-    if (time == 20) {
+    if (seasons == 1) {
         socket.emit('autumn');
     }
-    if (time == 40) {
+    if (seasons == 2) {
         socket.emit('winter');
     }
-    if (time == 60) {
+    if (seasons == 3) {
         socket.emit('spring');
     }
-    if (time == 80) {
+    if (seasons == 4) {
         socket.emit('summer');
     }
-    if (time == 100) {
-        background('#acacac');
-        socket.emit('normal');
-    }
+
     
-    if (time >= 20 && time <= 40) {
+    if (seasons == 1) {
         fill(0, 0, 0);
         text("Now is Autumn", 10, 325);
     }
-    if (time >= 40 && time <= 60) {
+    if (seasons == 2) {
         fill(0, 0, 0);
         text("Now is Winter", 10, 325);
     }
-    if (time >= 60 && time <= 80) {
+    if (seasons == 3) {
         fill(0, 0, 0);
         text("Now is Spring", 10, 325);
     }
-    if (time >= 80 && time <= 100) {
+    if (seasons == 4) {
         fill(0, 0, 0);
         text("Now is Summer", 10, 325);
     }
@@ -80,7 +81,7 @@ socket.on("matrix", function (m) {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 6) {
-                if (time >= 40 && time <= 60) {
+                if (seasons == 2) {
                     fill("white");
                     rect(x * side, y * side, side, side);
                 }
@@ -104,7 +105,7 @@ function setup() {
 }
 
 function Rain() {
-    if (time >= 40 && time <= 60) {
+    if (seasons = 2) {
         socket.emit('snow');
     }
     else {
@@ -117,5 +118,18 @@ function CreateBigHole() {
 }
 
 function DeleteBigHole() {
-    socket.emit('BigHoleDie');
+    socket.emit('BigHoleDie')
+}
+
+function Autumn(){
+    seasons = 1;
+}
+function Winter(){
+    seasons = 2;
+}
+function Spring(){
+    seasons = 3;
+}
+function Summer(){
+    seasons = 4;
 }
