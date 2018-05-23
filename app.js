@@ -14,24 +14,17 @@ server.listen(3000);
 global.matrix = [];
 global.n = 30;
 global.m = 30;
-var xotaker_qanak = 40;
-var gishatich_qanak = 20;
+var xotaker_qanak = 50;
+var gishatich_qanak = 30;
 var hole_qanak = 5;
-var mard_qanak = 20;
+var mard_qanak = 30;
 var joker_qanak = 5;
-var xotaker_a_qanak = Math.round(Math.random() * xotaker_qanak);
-var gishatich_a_qanak = Math.round(Math.random() * gishatich_qanak);
-var mard_a_qanak = Math.round(Math.random() * mard_qanak);
 var cxt_autumn = 15;
 var cxt_summer = 8;
 var s_grass_t = 20;
 var rain_snow = 10;
 global.k = n - 1;
 global.j = m - 1;
-
-console.log(xotaker_a_qanak);
-console.log(gishatich_a_qanak);
-console.log(mard_a_qanak);
 
 var Grass = require("./grass");
 var Xotaker = require("./xotaker");
@@ -121,72 +114,66 @@ for (var y = 0; y < matrix.length; y++) {
         }
     }
 }
-for (var i = 0; i <= xotaker_a_qanak; i++) {
-    var a = Math.floor(Math.random() * n);
-    var b = Math.floor(Math.random() * m);
-    while (matrix[a][b] != 2) {
-        var a = Math.floor(Math.random() * n);
-        var b = Math.floor(Math.random() * m);
+function gender(){
+for (var i in xotaker) {
+        if (xotaker[i].gender == 1) {
+           matrix[xotaker[i].y][xotaker[i].x] = 2.5;
+        }
     }
-    matrix[a][b] = 2.5;
-    for (var i in xotaker) {
-        if (xotaker[i].x == b && xotaker[i].y == a) {
-           xotaker[i].gender = 1; 
-            break;
+
+for (var i in gishatich) {
+        if (gishatich[i].gender == 1) {
+           matrix[gishatich[i].y][gishatich[i].x] = 3.5;
+        }
+    }
+
+for (var i in mard) {
+        if (mard[i].gender == 1) {
+           matrix[mard[i].y][mard[i].x] = 5.5;
         }
     }
 }
 
-for (var i = 0; i <= gishatich_a_qanak; i++) {
-    var a = Math.floor(Math.random() * n);
-    var b = Math.floor(Math.random() * m);
-    while (matrix[a][b] != 3) {
-        var a = Math.floor(Math.random() * n);
-        var b = Math.floor(Math.random() * m);
-    }
-    matrix[a][b] = 3.5;
-    for (var i in gishatich) {
-        if (gishatich[i].x == b && gishatich[i].y == a) {
-           gishatich[i].gender = 1; 
-            break;
-        }
-    }
-}
+setInterval(gender, 500);
 
-for (var i = 0; i <= mard_a_qanak; i++) {
-    var a = Math.floor(Math.random() * n);
-    var b = Math.floor(Math.random() * m);
-    while (matrix[a][b] != 5) {
-        var a = Math.floor(Math.random() * n);
-        var b = Math.floor(Math.random() * m);
-    }
-    matrix[a][b] = 5.5;
-    for (var i in mard) {
-        if (mard[i].x == b && mard[i].y == a) {
-           mard[i].gender = 1; 
-            break;
-        }
-    }
-}
+// function grass_p(){
+//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
+//     var _p = all/100;
+//     var p = Math.round(grass.length/_p);
+//     this.style.width = p + 'px';
+// }
+// function xotaker_p(){
+//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
+//     var _p = all/100;
+//     var p = Math.round(xotaker.length/_p);
+//     this.style.width = p + 'px';
+// }
+// function gishatich_p(){
+//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
+//     var _p = all/100;
+//     var p = Math.round(gishatich.length/_p);
+//     this.style.width = p + 'px';
+// }
+// function mard_p(){
+//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
+//     var _p = all/100;
+//     var p = Math.round(mard.length/_p);
+//     this.style.width = p + 'px';
+// }
 
-var fs = require('fs');
+// var grass_div = document.getElementById("grass");
+// var xotaker_div = document.getElementById("xotaker");
+// var gishatich_div = document.getElementById("gishatich");
+// var mard_div = document.getElementById("mard");
 
-var statis = {
-    "grass_qanak": grassArr.length,
-    "xotaker_qanak": xotaker.length,
-    "gishatich_qanak": gishatich.length,
-    "mard_qanak": mard.length,
-    "hole_qanak": hole.length
-};
+// grass_div.addEventListener(,grass_p);
+// xotaker_div.addEventListener(,xotaker_p);
+// gishatich_div.addEventListener(,gishatich_p);
+// mard_div.addEventListener(,mard_p);
 
 io.on('connection', function (socket) {
     io.sockets.emit('matrix', matrix);
 
-    socket.on('statistics', function () {
-        var file = 'statistics.json';
-        var text = JSON.stringify(statis) + "\n";
-        fs.appendFileSync(file, text);
-    });
     socket.on('autumn', function () {
         for (var y = 0; y < matrix.length; y++) {
             for (var x = 0; x < matrix[y].length; x++) {

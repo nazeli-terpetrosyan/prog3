@@ -2,7 +2,7 @@ module.exports = class LivingCreature {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.gender = 0;
+        this.gender = Math.round(Math.random() * 2);
     }
     random(array){
         var a = Math.round(Math.random() * array.length);

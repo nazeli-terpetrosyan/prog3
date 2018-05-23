@@ -7,6 +7,9 @@
     <script src="script.js"></script>
 
     <style>
+        *{
+            -webkit-transition: background 0.5s, color 0.5s;
+        }
         img {
             width: 40px;
             height: 40px;
@@ -16,10 +19,19 @@
             display: inline-block;
             margin: 5px;
         }
+        #stats{
+            margin-bottom: 15px;
+            text-decoration: none;
+            color:#33bbff;
+        }
+        #stats:hover{
+            color:#ff6666;
+        }
     </style>
 </head>
 
 <body>
+    <a id="stats" href="statistics.html">Statistics</a>
     <div class="upper_buttons">
         <button onclick="CreateBigHole()">CreateBigHole</button>
         <button onclick="DeleteBigHole()">DeleteBigHole</button>

@@ -3,7 +3,7 @@ LivingCreature = require("./livingcreature");
 module.exports = class Grass extends LivingCreature {
     constructor(x, y) {
         super(x, y);
-        this.multiply = Math.round(Math.random() * 5);
+        this.multiply = Math.round(Math.random() * 10);
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -17,7 +17,7 @@ module.exports = class Grass extends LivingCreature {
     }
     bazmanal() {
         var norVandak = this.random(this.choose(0));
-        if (this.multiply >= 5 && norVandak) {
+        if (this.multiply >= 10 && norVandak) {
             var norXot = new Grass(norVandak[0], norVandak[1]);
             grassArr.push(norXot);
             matrix[norVandak[1]][norVandak[0]] = 1;
