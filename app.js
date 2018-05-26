@@ -2,8 +2,10 @@ var express = require("express");
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var ip = require('ip');
 
 app.use(express.static("public"));
+console.log(ip.address());
 
 app.get("/", function (req, res) {
     res.redirect("public");
@@ -40,6 +42,11 @@ global.hole = [];
 global.mard = [];
 global.joker = [];
 global.bighole = [];
+
+var grass_p;
+var xotaker_p;
+var gishatich_p;
+var mard_p;
 
 for (var i = 0; i < m; i++) {
     var arr = [];
@@ -114,64 +121,39 @@ for (var y = 0; y < matrix.length; y++) {
         }
     }
 }
-function gender(){
-for (var i in xotaker) {
+function gender() {
+    for (var i in xotaker) {
         if (xotaker[i].gender == 1) {
-           matrix[xotaker[i].y][xotaker[i].x] = 2.5;
+            matrix[xotaker[i].y][xotaker[i].x] = 2.5;
         }
     }
 
-for (var i in gishatich) {
+    for (var i in gishatich) {
         if (gishatich[i].gender == 1) {
-           matrix[gishatich[i].y][gishatich[i].x] = 3.5;
+            matrix[gishatich[i].y][gishatich[i].x] = 3.5;
         }
     }
 
-for (var i in mard) {
+    for (var i in mard) {
         if (mard[i].gender == 1) {
-           matrix[mard[i].y][mard[i].x] = 5.5;
+            matrix[mard[i].y][mard[i].x] = 5.5;
         }
     }
 }
 
 setInterval(gender, 500);
 
-// function grass_p(){
-//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
-//     var _p = all/100;
-//     var p = Math.round(grass.length/_p);
-//     this.style.width = p + 'px';
-// }
-// function xotaker_p(){
-//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
-//     var _p = all/100;
-//     var p = Math.round(xotaker.length/_p);
-//     this.style.width = p + 'px';
-// }
-// function gishatich_p(){
-//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
-//     var _p = all/100;
-//     var p = Math.round(gishatich.length/_p);
-//     this.style.width = p + 'px';
-// }
-// function mard_p(){
-//     var all = xotaker.length+grass.length+gishatich.length+mard.length;
-//     var _p = all/100;
-//     var p = Math.round(mard.length/_p);
-//     this.style.width = p + 'px';
-// }
-
-// var grass_div = document.getElementById("grass");
-// var xotaker_div = document.getElementById("xotaker");
-// var gishatich_div = document.getElementById("gishatich");
-// var mard_div = document.getElementById("mard");
-
-// grass_div.addEventListener(,grass_p);
-// xotaker_div.addEventListener(,xotaker_p);
-// gishatich_div.addEventListener(,gishatich_p);
-// mard_div.addEventListener(,mard_p);
-
 io.on('connection', function (socket) {
+    function stats() {
+        var all = xotaker.length + grassArr.length + gishatich.length + mard.length;
+        grass_p = grassArr.length * 99/all;
+        xotaker_p = xotaker.length *99/all;
+        gishatich_p = gishatich.length *99/all;
+        mard_p = mard.length *99/all;
+        io.sockets.emit('statistics', {'Grass': grass_p, 'Xotaker':xotaker_p,'Gishatich':gishatich_p, 'Mard':mard_p});
+    }
+    setInterval(stats, 500);
+
     io.sockets.emit('matrix', matrix);
 
     socket.on('autumn', function () {
@@ -240,9 +222,17 @@ io.on('connection', function (socket) {
             matrix[a][b] = 6;
         }
     });
-
+    var g = 0;
     socket.on('snow', function () {
-        var t = Math.round(grassArr.length * rain_snow / 100);
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 1) {
+                    g++;
+                }
+            }
+        }
+        var t = Math.round(g * rain_snow / 100);
+        g = 0;
         for (var i = 0; i <= t; i++) {
             var a = Math.floor(Math.random() * n);
             var b = Math.floor(Math.random() * m);
@@ -253,8 +243,17 @@ io.on('connection', function (socket) {
             matrix[a][b] = 6;
         }
     });
+    var gray = 0;
     socket.on('rain', function () {
-        var t = Math.round(grassArr.length * rain_snow / 100);
+        for (var y = 0; y < matrix.length; y++) {
+            for (var x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] == 0) {
+                    gray++;
+                }
+            }
+        }
+        var t = Math.round(gray * rain_snow / 100);
+        gray = 0;
         for (var i = 0; i <= t; i++) {
             var a = Math.floor(Math.random() * n);
             var b = Math.floor(Math.random() * m);

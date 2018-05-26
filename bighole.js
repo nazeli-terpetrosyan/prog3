@@ -110,7 +110,7 @@ module.exports = class BigHole {
             var x = this.directions[i][0];
             var y = this.directions[i][1];
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == 2 || matrix[y][x] == 3 || matrix[y][x] == 5) {
+                if (matrix[y][x] == 2 || matrix[y][x] == 3 || matrix[y][x] == 5 || matrix[y][x] == 2.5 || matrix[y][x] == 3.5 || matrix[y][x] == 5.5) {
                     found.push(this.directions[i]);
                 }
             }

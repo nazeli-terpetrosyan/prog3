@@ -1,6 +1,5 @@
 matrix = [];
 socket = io();
-var statistics = 0;
 var side = 10;
 var seasons = 3;
 var weather = "Spring";
@@ -14,12 +13,7 @@ var mard = [];
 socket.on("matrix", function (m) {
     matrix = m;
     background('#acacac');
-    statistics++;
 
-    if (statistics == 10) {
-        socket.emit('statistics');
-        statistics = 0;
-    }
     if (seasons == 1) {
         if (weather != "Autumn") {
             socket.emit('autumn');
