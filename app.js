@@ -2,10 +2,8 @@ var express = require("express");
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var ip = require('ip');
 
 app.use(express.static("public"));
-console.log(ip.address());
 
 app.get("/", function (req, res) {
     res.redirect("public");
